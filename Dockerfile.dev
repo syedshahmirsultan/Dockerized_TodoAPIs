@@ -1,0 +1,19 @@
+# Base Image
+FROM python:3.12
+
+#Working Directiory
+WORKDIR /code
+
+RUN pip install poetry
+
+COPY . /code/
+
+# Configuration to avoid creating virtual environments inside the Docker container
+RUN poetry config virtualenvs.create false
+
+#Install All Dependencies in the container
+RUN poetry install
+
+CMD ["poetry","run","uvicorn","todoapp.main:app","--reload"]
+
+
